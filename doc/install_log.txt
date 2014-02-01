@@ -1,0 +1,19 @@
+mkdir -p ~/opt/gallery
+cd ~/opt/gallery
+virtualenv --no-site-packages python
+source python/bin/activate
+# install missing system dependencies when it bails out
+pip install pyramid
+pip install uwsgi
+cd ~/opt
+pcreate -s alchemy gallery
+cd gallery
+# append [uwsgi] to development.ini
+mkdir etc
+cd etc
+# install gallery.nginx and link it into /etc/nginx/sites-enabled
+sudo /etc/init.d/nginx restart
+cd ~/opt/gallery
+python/bin/initialize_gallery_db
+uwsgi --ini-paste development.ini
+# and it should work!
