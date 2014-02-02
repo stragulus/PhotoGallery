@@ -5,11 +5,11 @@ GALLERY_DIR=/home/brama/opt/gallery
 
 case $1 in
 start)
-	uwsgi --ini-paste $GALLERY_DIR/development.ini
+	$GALLERY_DIR/python/bin/uwsgi --ini-paste $GALLERY_DIR/development.ini
 	exit $?
 	;;
 stop)
-	kill $GALLERY_DIR/var/uwsgi.pid
+	kill $(cat $GALLERY_DIR/var/uwsgi.pid)
 	;;
 restart)
 	$0 stop

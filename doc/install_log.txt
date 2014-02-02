@@ -17,3 +17,11 @@ cd ~/opt/gallery
 python/bin/initialize_gallery_db
 uwsgi --ini-paste development.ini
 # and it should work!
+
+# for postgres
+sudo apt-get install libpq-dev postgresql postgresql-client
+pip install psycopg2
+sudo su - postgres
+psql
+CREATE USER gallery WITH PASSWORD '******************';
+CREATE DATABASE gallery OWNER gallery;

@@ -32,6 +32,6 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     session.configure(bind=engine)
     Base.metadata.create_all(engine)
-    with transaction.manager:
-        tag = Tag(label='test')
-        session.add(tag)
+    #with transaction.manager:
+    #    tag = Tag(label='test')
+    #    session.add(tag)
