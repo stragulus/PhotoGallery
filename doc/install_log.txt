@@ -25,3 +25,9 @@ sudo su - postgres
 psql
 CREATE USER gallery WITH PASSWORD '******************';
 CREATE DATABASE gallery OWNER gallery;
+# exit, then modify /etc/postgresql/....../pg_hba.conf and change:
+local   all             postgres                                peer
+# into
+local   all             postgres                                md5
+# then:
+sudo /etc/init.d/postgr* restart
