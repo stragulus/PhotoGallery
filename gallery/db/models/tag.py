@@ -4,6 +4,8 @@ from gallery.db.models.base import Base
 
 class Tag(Base):
     __tablename__ = 'tag'
-    label = Column(VARCHAR(64), primary_key=True)
+    id = Column(Integer, primary_key=True)
+    label = Column(VARCHAR(64), unique=True)
 
+# XXX isn't this duplicate?
 Index('tag_label', Tag.label, unique=True)

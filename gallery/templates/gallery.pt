@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+  <head>
+    <meta charset="utf-8">
+    <title>Gallery</title>
+  </head>
+
+  <body>
+		<div>
+			<form>
+				What are you searching for: 
+				<input type="text" size="20" name="q">
+				<br>
+				<input type="submit" name="Find!">
+			</form>
+		</div>
+		<div>
+			<span tal:repeat="picture pictures">
+				<a href="${picture.url}" target="_blank"><img src="$(picture.thumb_url}" width="128"></a>
+			</span>
+		</div>
+  </body>
+</html>

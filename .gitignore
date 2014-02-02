@@ -2,3 +2,4 @@ python
 log/uwsgi.log
 var/uwsgi.pid
 .*.swp
+gallery.sqlite
