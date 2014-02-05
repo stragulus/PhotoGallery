@@ -3,3 +3,4 @@ log/uwsgi.log
 var/uwsgi.pid
 .*.swp
 gallery.sqlite
+gallery/config.py

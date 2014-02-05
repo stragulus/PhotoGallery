@@ -7,5 +7,8 @@ class Tag(Base):
     id = Column(Integer, primary_key=True)
     label = Column(VARCHAR(64), unique=True)
 
+    def __init__(self, label):
+        self.label = label
+
 # XXX isn't this duplicate?
 Index('tag_label', Tag.label, unique=True)

@@ -1,3 +1,6 @@
+import random
+import string
+
 from sqlalchemy import CHAR, Column, Index, Integer, VARCHAR, Table, Text
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -18,10 +21,7 @@ class Photo(Base):
 
     tags = relationship("Tag", secondary=photo_tag_table, backref="photos")
 
-Index('photo_key', Photo.key, unique=True)
+    def __init__(self):
+        self.key = ''.join(random.choice(string.letters + string.digits) for x in range(16))
 
-#class PhotoTag(Base):
-#    __tablename__ = 'photo_tag'
-#
-#    photo_id = Column(Integer, ForeignKey('photo.id'))
-#    tag_id = Column(Integer, ForeignKey('tag.id'))
+Index('photo_key', Photo.key, unique=True)
