@@ -3,7 +3,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from zope.sqlalchemy import ZopeTransactionExtension
 
 from gallery import config
-from gallery.db.models.base import Base
 
 _session = None
 
@@ -28,7 +27,7 @@ def init_db(db_uri=None, engine_settings=None, session_settings=None):
     default_session_settings = dict(
         autocommit = True,
         autoflush = False,
-        expire_on_commit = False,
+        expire_on_commit = True,
     )
     if session_settings:
         default_session_settings.update(session_settings)
@@ -38,11 +37,16 @@ def init_db(db_uri=None, engine_settings=None, session_settings=None):
     global _session
     # thread-local sessions!
     _session = scoped_session(session_maker)
+    from gallery.db.models.base import Base
     Base.metadata.bind = engine
 
 class SessionWrapper(object):
     def __getattribute__(self, name):
         global _session
+
+        if _session == None:
+            init_db()
+
         return _session.__getattribute__(name)
         
 # wrap the session such that when code imports session before init_db is called,
