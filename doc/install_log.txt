@@ -5,6 +5,12 @@ source python/bin/activate
 # install missing system dependencies when it bails out
 pip install pyramid
 pip install uwsgi
+sudo apt-get install libjpeg-dev
+# FFS, why!?
+sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
+sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
+pip install PIL
 cd ~/opt
 pcreate -s alchemy gallery
 cd gallery
