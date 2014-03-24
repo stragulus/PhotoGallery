@@ -8,6 +8,7 @@ from sqlalchemy.orm import relationship
 from gallery.db import session
 from gallery.db.models.base import Base
 from gallery.db.models.photo_tag import PhotoTag
+from gallery.db.models.tag import Tag
 
 class Photo(Base):
     __tablename__ = 'photo'
@@ -36,6 +37,17 @@ class Photo(Base):
 
         self.tags = tags
         session.flush()
+
+    def get_link(self, width=None):
+        return '/view/%s%s' % (self.key, '/%d' % width if width != None else '')
+
+    @staticmethod
+    def find_by_tag(txt):
+        #.join(PhotoTag,Tag)\
+        q = session.query(Photo)\
+            .join(Photo.tags)\
+            .filter(Tag.label.like('%' + txt + '%'))
+        return q
 
             
 

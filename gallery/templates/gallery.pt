@@ -16,7 +16,7 @@
     </div>
     <div>
       <span tal:repeat="picture pictures">
-        <a href="${picture.url}" target="_blank"><img src="$(picture.thumb_url}" width="128"></a>
+        <a href="${picture.get_link()}" target="_blank"><img src="${picture.get_link(128)}" width="128"></a>
       </span>
     </div>
   </body>

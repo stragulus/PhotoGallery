@@ -15,10 +15,7 @@ from gallery.db.models import Photo, PhotoTag, Tag
 def my_view(request):
     if 'q' in request.params:
         q = request.params['q']
-        pictures = session.query(Photo)\
-            .join(Photo.tags)\
-            .filter(Tag.label.like('%%%s%%' % q)) \
-            .all()
+        pictures = Photo.find_by_tag(q).all()
     else:
         pictures = []
     #return Response(conn_err_msg, content_type='text/plain', status_int=500)
@@ -28,10 +25,14 @@ def my_view(request):
 
 @view_config(route_name='imageserver')
 def image_server(request):
-    if not 'key' in request.params:
+    # example request: /view/PHOTOKEY/width
+    args = request.matchdict.get('args')
+
+    if not args or len(args) < 1:
         return httpexceptions.HTTPBadRequest('Missing key parameter')
 
-    p = session.query(Photo).filter_by(key = request.params['key']).first()
+    key = args[0]
+    p = session.query(Photo).filter_by(key = key).first()
     if not p:
         return httpexceptions.HTTPNotFound('Could not find that image')
 
@@ -40,8 +41,8 @@ def image_server(request):
     if not os.path.exists(path):
         return httpexceptions.HTTPNotFound('Da plaatje ken ik nie vinde nie')
 
-    scale = request.params.get('scale')
-    if scale != None:
+    if len(args) >= 2:
+        scale = args[1]
         try:
             scale = int(scale)
         except ValueError:
